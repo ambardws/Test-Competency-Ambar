@@ -1,0 +1,38 @@
+{{>header}}
+{{>navbar}}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      {{#if message}}
+            <div class="alert alert-{{message.type}} alert-dismissible fade show" role="alert">
+             {{message.message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {{/if}}
+      <div class="form-signup-login">
+          <h1>{{title}}</h1>
+          <form action="/signup" method="POST">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" aria-describedby="emailHelp" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label" required>Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+            <button type="submit" class="btn-signup-login">Sign Up</button>
+            <p class="title-login">You have an account?</p>
+        </form>
+        <a href="/login"><button class="btn-login">Login</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{>footer}}
+

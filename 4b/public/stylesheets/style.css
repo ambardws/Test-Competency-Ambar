@@ -1,0 +1,278 @@
+
+body {
+    background-color: #212121;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body .detail-artist {
+    background-color: #000000;
+    background-image: linear-gradient(315deg, #000000 0%, #414141 74%);
+    padding: 15px;
+    max-height: 450px;
+    border-radius: 5px;
+    color: white;
+    overflow-y: auto;
+    
+}
+
+.img-max {
+    max-width: 500px;
+    max-height: 400px;
+}
+
+
+.play-bar {
+    color: white;
+    height: 80px;
+    margin-top: 50px;
+    border-top: 2px solid #99A799;
+}
+
+audio {
+    width: 100%;
+}
+
+.right-side {
+    padding-left: 50px;
+}
+
+.nav-bar-menu {
+    padding: 5px 25px;
+    margin: 5px 5px;
+    border: 2px solid #1597E5;
+    text-decoration: none;
+    color: #1597E5;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.nav-bar-menu:hover {
+    padding: 5px 25px;
+    margin: 5px;
+    border: none;
+    text-decoration: none;
+    background-color: #1597E5;
+    color: white;
+    border-radius: 5px;
+}
+
+.nav-bar-menu:active {
+    padding: 5px 25px;
+    margin: 5px;
+    border: none;
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+}
+
+.img-avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+.carousel-item {
+    height: 32rem;
+  }
+
+.carousel-item > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 32rem;
+}
+
+.container {
+    color: black;
+}
+
+.card {
+    border: none;
+}
+
+.card-menu {
+    background-color: greenyellow;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+.song-select:hover {
+    /* opacity: 0.5; */
+    cursor: pointer;
+}
+
+.signup-img {
+    height: 100vh;
+    background-image: url("/public/image/sign-up.jpg");
+    background-size: cover;
+    background-position: right;
+}
+
+.column-signup-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form-signup-login {
+    color: white;
+    width: 60%;
+    padding: 15px;
+    margin: 20px auto;
+    border: solid 2px #99A799;
+    border-radius: 10px;
+}
+
+.btn-signup-login {
+    border: none;
+    font-weight: bold;
+    margin-top: 30px;
+    padding: 10px;
+    height: 40px;
+    width: 100%;
+    background-color: #1597E5;
+    color: black;
+    border-radius: 5px;
+}
+
+.form-signup-login h1 {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.title-signup, .title-login {
+    text-align: center;
+    padding: 10px 5px 0 0;
+}
+
+.btn-signup, .btn-login {
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid white;
+    color: white;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #212121;
+}
+
+.btn-signup:hover, .btn-login:hover {
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    color: black;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.btn-save {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border: none;
+    font-weight: bold;
+    padding: 10px;
+    height: 40px;
+    width: 30%;
+    background-color: gray;
+    color:white;
+    border-radius: 5px;
+}
+
+
+.card-custom {
+    border: 2px solid white;
+}
+
+.btn-play {
+    text-decoration: none;
+    height: 20px;
+    width: 20px;
+}
+
+
+#title-song {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* right part */
+.middle{
+    width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+.middle button{
+   border: none;
+   height: 50px;
+   width: 50px;
+   margin-top: 10px;
+   border-radius: 50%;	
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   outline: none;
+   transition: 0.5s;
+   background: rgba(255,255,255,0.1);
+}
+
+.middle button:hover{
+	background: #FF8A65;
+}
+
+.duration{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    margin-top: 15px;
+    width: 100%;
+	height: 20px;
+}
+
+.duration p{
+	color: #fff;
+	font-size: 15px;
+	margin-left: 20px;
+}
+
+
+.list {
+    height: 30px;
+    width: 100%;
+    border: solid 2px grey;
+    background-color: grey;
+    border-radius: 10px;
+}
+
+.list p {
+    font-weight: bold;
+    padding: 1px;
+}
+
+.collection-task {
+    height: 70px;
+    width: 110px;
+    background-color: grey;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    color: white;
+}
+
+.collection-task p {
+    text-align: center;
+    font-weight: bold;
+    padding-top: 20px;
+}

@@ -1,0 +1,64 @@
+{{>header}}
+{{>navbar}}
+
+<div class="container">
+{{#if isLogin}}
+  <div class="row">
+    <div class="col">
+      <div class="form-signup-login">
+          <form action="/" method="POST">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Add Task</label>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <select class="form-select" aria-label="Default select example" name="listCollection">
+                    <option selected>Select Collection</option>
+                    {{#each listCollection}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-10">
+                     <input type="text" class="form-control" name="task" required>
+                  </div>
+                  <div class="col-md-2">
+                      <button type="submit" class="btn btn-secondary fas fa-plus fa-lg mt-1"></button>
+                  </div>
+                </div>
+            </div>
+        </form>
+        
+        <div class="row">
+          {{#each listCollection}}
+          <a href = "detail-collection/{{this.id}}" class="col-sm-3 mt-2 text-decoration-none">
+           <div class="collection-task"><p>{{this.name}}</p></div>
+          </a>
+          {{/each}}
+        </div>
+
+        <h1 class="mt-4">All Task</h1>
+        {{#each taskProgress}}
+        <div class="list mt-3">
+          <p>{{this.name}}</p>
+        </div>
+        {{/each}}
+        <h1>Task Done</h1>
+        {{#each taskDone}}
+        <div class="list mt-3">
+          <p>{{this.name}}</p>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+{{/if}}
+</div>
+
+
+
+
+
+
+{{>footer}}

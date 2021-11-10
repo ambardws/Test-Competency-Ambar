@@ -1,0 +1,42 @@
+{{>header}}
+{{>navbar}}
+
+<div class="container">
+{{#if isLogin}}
+  <div class="row">
+    <div class="col">
+      <div class="form-signup-login">        
+        <div class="row">
+          {{#each listCollection}}
+          <a href = "detail-collection/{{this.id}}" class="col-sm-3 mt-2 text-decoration-none">
+           <div class="collection-task"><p>{{this.name}}</p></div>
+          </a>
+          {{/each}}
+        </div>
+
+        <h1 class="mt-4">All Task</h1>
+        {{#each detailCollectProgress}}
+        <div class="list mt-3">
+          <p>{{this.name}}</p>
+        </div>
+        {{/each}}
+        <h1>Task Done</h1>
+        {{#each detailCollectDone}}
+        <div class="list mt-3">
+          <p>{{this.name}}</p>
+        </div>
+        {{/each}}
+        <a class="btn btn-primary mt-3" href="/" role="button">Back</a>
+      </div>
+
+    </div>
+  </div>
+{{/if}}
+</div>
+
+
+
+
+
+
+{{>footer}}
