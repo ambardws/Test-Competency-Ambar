@@ -9,7 +9,7 @@ function cetakPola(val) {
             if(k % 2 == 0) {
                 string += " "
             } else if (k % 2 != 0) {
-                if(k == 1) {
+                if(i % 2 == 1 && k == 1) {
                     string += k 
                 } else {
                     string += k

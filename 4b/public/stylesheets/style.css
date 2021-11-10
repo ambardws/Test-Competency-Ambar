@@ -254,6 +254,7 @@ audio {
     border: solid 2px grey;
     background-color: grey;
     border-radius: 10px;
+    display: flex;
 }
 
 .list p {

@@ -2,11 +2,12 @@
 {{>navbar}}
 
 <div class="container">
-{{!-- {{#if isLogin}}
+{{#if isLogin}}
   <div class="row">
     <div class="col">
       <div class="form-signup-login">
-          <form action="/" method="POST">
+        <h1>{{title}} - {{taskDone.0.username}}</h1>
+          <form action="/add-task" method="POST">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Add Task</label>
                 <div class="row">
@@ -38,22 +39,24 @@
           {{/each}}
         </div>
 
-        <h1 class="mt-4">All Task</h1>
+        <h1 class="mt-4">On Progress</h1>
         {{#each taskProgress}}
         <div class="list mt-3">
-          <p>{{this.name}}</p>
+          <p style="flex: 10%;">{{this.name}}</p> 
+          <a class="btn btn-success btn-sm" href="/mylist/is-done/{{this.id}}" role="button">Done</a>
         </div>
         {{/each}}
         <h1>Task Done</h1>
         {{#each taskDone}}
         <div class="list mt-3">
-          <p>{{this.name}}</p>
+          <p style="flex: 10%;">{{this.name}}</p>
+          <a class="btn btn-danger btn-sm" href="/mylist/delete-task/{{this.id}}" role="button">X</a>
         </div>
         {{/each}}
       </div>
     </div>
   </div>
-{{/if}} --}}
+{{/if}}
 </div>
 
 

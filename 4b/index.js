@@ -45,9 +45,19 @@ const dbConnection = require('./connection/db')
 var isLogin = false
 
 app.get('/',function (request, response){
+    const title = 'Dashboard'
+    response.render('index', {
+        title : title
+    })
+})
+
+
+app.get('/mylist',function (request, response){
+    let id = request.session.user.id
+    
     const title = 'My Task'
-    const query = `SELECT * FROM task_tb WHERE is_done = 1`
-    const query1 = `SELECT * FROM task_tb WHERE is_done = 0`
+    const query = `SELECT users_tb.username, task_tb.name, task_tb.id FROM task_tb INNER JOIN collections_tb on collections_tb.id = task_tb.collections_id INNER JOIN users_tb ON users_tb.id = collections_tb.user_id WHERE users_tb.id = 1 AND is_done = 1`
+    const query1 = `SELECT users_tb.username, task_tb.name, task_tb.id FROM task_tb INNER JOIN collections_tb on collections_tb.id = task_tb.collections_id INNER JOIN users_tb ON users_tb.id = collections_tb.user_id WHERE users_tb.id = ${id} AND is_done = 0`
     const query2 = `SELECT * FROM collections_tb`
 
     dbConnection.getConnection(function (err, conn) {
@@ -57,19 +67,20 @@ app.get('/',function (request, response){
        if (err) throw err
  
        const taskDone = []
- 
-       for (let result of results) {
+       for (let result of results) {          
         taskDone.push({
            id: result.id,
            name: result.name,
+           username: result.username
          })
        }
+
+       
 
      conn.query(query1, function (err, results) {
         if (err) throw err
   
         const taskProgress = []
-  
         for (let result of results) {
         taskProgress.push({
             id: result.id,
@@ -88,7 +99,7 @@ app.get('/',function (request, response){
                 name: result.name,
               })
             }
-            response.render('index', {
+            response.render('myList', {
               title: title,
               isLogin: request.session.isLogin,
               taskProgress,
@@ -102,7 +113,7 @@ app.get('/',function (request, response){
    })
 })
 
-app.post('/',function (request, response){
+app.post('/add-task',function (request, response){
     const {task, listCollection} = request.body
     let is_done = 0
 
@@ -111,7 +122,7 @@ app.post('/',function (request, response){
             type : 'danger',
             message : 'Please insert all data'
         }
-        response.redirect('/index')
+        response.redirect('/myList')
     }
 
     const query = `INSERT INTO task_tb (name,is_done,collections_id) VALUES ("${task}",${is_done},${listCollection})`
@@ -125,7 +136,7 @@ app.post('/',function (request, response){
         conn.query(query, function(err, results){
             if(err) throw err
 
-            response.redirect('/')
+            response.redirect('/mylist')
             
         })
         dbConnection.releaseConnection(conn)
@@ -133,10 +144,12 @@ app.post('/',function (request, response){
 })
 
 app.get('/detail-collection/:id',function (request, response){
+    let idUser = request.session.user.id
     const id = request.params.id
     const title = 'Detail By Collection'
-    const query = `SELECT * FROM task_tb WHERE collections_id = ${id} AND is_done = 1`
-    const query2 = `SELECT * FROM task_tb WHERE collections_id = ${id} AND is_done = 0`
+    
+    const query = `SELECT task_tb.name FROM task_tb INNER JOIN collections_tb on collections_tb.id = task_tb.collections_id INNER JOIN users_tb ON users_tb.id = collections_tb.user_id WHERE task_tb.collections_id = ${id} AND users_tb.id = ${idUser} AND is_done = 1`
+    const query2 = `SELECT task_tb.name FROM task_tb INNER JOIN collections_tb on collections_tb.id = task_tb.collections_id INNER JOIN users_tb ON users_tb.id = collections_tb.user_id WHERE task_tb.collections_id = ${id} AND users_tb.id = ${idUser} AND is_done = 0`
 
     dbConnection.getConnection(function (err, conn) {
      if (err) throw err;
@@ -153,7 +166,6 @@ app.get('/detail-collection/:id',function (request, response){
          })
        }
 
-       console.log(detailCollectDone)
        
         conn.query(query2, function (err, results) {
         if (err) throw err
@@ -177,6 +189,47 @@ app.get('/detail-collection/:id',function (request, response){
    })
 })
 })
+
+app.get('/mylist/is-done/:id',function (request, response){
+    // let idUser = request.session.user.id
+    const id = request.params.id
+    
+    const query = `UPDATE task_tb SET is_done = 1 WHERE id = ${id}`
+
+    dbConnection.getConnection(function (err, conn) {
+     if (err) throw err;
+ 
+     conn.query(query, function (err, results) {
+       if (err) throw err
+ 
+       response.redirect('/myList')
+    })
+     dbConnection.releaseConnection(conn)
+   })
+})
+
+
+app.get('/mylist/delete-task/:id',function (request, response){
+    // let idUser = request.session.user.id
+    const id = request.params.id
+    
+    const query = `DELETE FROM task_tb WHERE id = ${id}`
+
+    dbConnection.getConnection(function (err, conn) {
+     if (err) throw err;
+ 
+     conn.query(query, function (err, results) {
+       if (err) throw err
+ 
+       response.redirect('/myList')
+    })
+     dbConnection.releaseConnection(conn)
+   })
+})
+
+
+
+
 
 
 
@@ -242,7 +295,6 @@ app.post('/login', function (request, response) {
       conn.query(query, function (err, results) {
         if (err) throw err
   
-        // console.log(results)
         if (results.length == 0) {
           request.session.message = {
             type: 'danger',
@@ -261,7 +313,7 @@ app.post('/login', function (request, response) {
             id: results[0].id
           }
         }
-        response.redirect('/')
+        response.redirect('/mylist')
       })
       dbConnection.releaseConnection(conn)
     })
