@@ -40,7 +40,8 @@ app.use(
         })
 
 // get connection
-const dbConnection = require('./connection/db')
+const dbConnection = require('./connection/db');
+const connectionPool = require('./connection/db');
 
 var isLogin = false
 
@@ -56,7 +57,7 @@ app.get('/mylist',function (request, response){
     let id = request.session.user.id
     
     const title = 'My Task'
-    const query = `SELECT users_tb.username, task_tb.name, task_tb.id FROM task_tb INNER JOIN collections_tb on collections_tb.id = task_tb.collections_id INNER JOIN users_tb ON users_tb.id = collections_tb.user_id WHERE users_tb.id = 1 AND is_done = 1`
+    const query = `SELECT users_tb.username, task_tb.name, task_tb.id FROM task_tb INNER JOIN collections_tb on collections_tb.id = task_tb.collections_id INNER JOIN users_tb ON users_tb.id = collections_tb.user_id WHERE users_tb.id = ${id} AND is_done = 1`
     const query1 = `SELECT users_tb.username, task_tb.name, task_tb.id FROM task_tb INNER JOIN collections_tb on collections_tb.id = task_tb.collections_id INNER JOIN users_tb ON users_tb.id = collections_tb.user_id WHERE users_tb.id = ${id} AND is_done = 0`
     const query2 = `SELECT * FROM collections_tb`
 
@@ -207,6 +208,77 @@ app.get('/mylist/is-done/:id',function (request, response){
      dbConnection.releaseConnection(conn)
    })
 })
+
+
+app.get('/mylist/edit-task/:id',function (request, response){
+    // let idUser = request.session.user.id
+    const id = request.params.id
+    
+    const query = `SELECT * FROM task_tb WHERE id = ${id}`
+
+    dbConnection.getConnection(function (err, conn) {
+        if (err) throw err;
+    
+        conn.query(query, function (err, results) {
+          if (err) throw err
+    
+          const editTask = []
+    
+          for (let result of results) {
+            editTask.push({
+              id: result.id,
+              name: result.name,
+            })
+          }
+ 
+           response.render('editTask', {
+               title: "Edit",
+               isLogin: request.session.isLogin,
+               editTask
+           })
+       })
+        dbConnection.releaseConnection(conn)
+    })
+})
+
+app.post('/edit-task',function (request, response){
+    // let idUser = request.session.user.id
+    const {id, task} = request.body
+
+    console.log(request.body)
+    
+    const query = `UPDATE task_tb SET name = "${task}" WHERE id = ${id}`
+
+    dbConnection.getConnection(function (err, conn) {
+        if (err) throw err;
+    
+        conn.query(query, function (err, results) {
+          if (err) throw err
+
+          response.redirect('/myList')
+        })
+        dbConnection.releaseConnection(conn)
+    })
+})
+   
+   app.get('/mylist/is-done/:id',function (request, response){
+       // let idUser = request.session.user.id
+       const id = request.params.id
+       
+       const query = `UPDATE task_tb SET is_done = 1 WHERE id = ${id}`
+   
+       dbConnection.getConnection(function (err, conn) {
+        if (err) throw err;
+    
+        conn.query(query, function (err, results) {
+          if (err) throw err
+    
+          response.redirect('/myList')
+       })
+        dbConnection.releaseConnection(conn)
+      })
+})
+
 
 
 app.get('/mylist/delete-task/:id',function (request, response){

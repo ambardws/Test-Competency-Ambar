@@ -42,8 +42,9 @@
         <h1 class="mt-4">On Progress</h1>
         {{#each taskProgress}}
         <div class="list mt-3">
-          <p style="flex: 10%;">{{this.name}}</p> 
-          <a class="btn btn-success btn-sm" href="/mylist/is-done/{{this.id}}" role="button">Done</a>
+          <p style="flex: 10%;">{{this.name}}</p>
+          <a class="btn btn-primary btn-sm" href="/mylist/edit-task/{{this.id}}" style="margin-right: 10px;">Edit</a>
+          <a class="btn btn-success btn-sm " href="/mylist/is-done/{{this.id}}" role="button">Done</a>
         </div>
         {{/each}}
         <h1>Task Done</h1>
@@ -58,10 +59,6 @@
   </div>
 {{/if}}
 </div>
-
-
-
-
 
 
 {{>footer}}
